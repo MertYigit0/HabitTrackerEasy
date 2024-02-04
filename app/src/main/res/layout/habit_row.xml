@@ -11,20 +11,21 @@
     app:cardElevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="384dp"
-        android:layout_height="359dp"
+        android:layout_width="392dp"
+        android:layout_height="226dp"
         android:layout_centerInParent="true"
         android:padding="8dp">
 
 
         <CalendarView
-            android:layout_width="328dp"
-            android:layout_height="218dp"
+            android:layout_width="153dp"
+            android:layout_height="183dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.602"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.886" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/habitName"
@@ -44,10 +45,12 @@
             android:layout_height="26dp"
             android:layout_below="@+id/habitName"
             android:layout_centerHorizontal="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="20dp"
             android:enabled="false"
             android:gravity="center"
             android:textColorHint="#000000"
-            android:textSize="36dp"
+            android:textSize="20dp"
             android:textStyle="normal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/habitName" />
