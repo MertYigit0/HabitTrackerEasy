@@ -17,7 +17,8 @@ class GraphView @JvmOverloads constructor(
     private val gapSize = 2 // 1 dp boşluk
     private val numCols = 52
     private val numRows = 7
-    private val data = Array(numRows) { IntArray(numCols) }
+    private val data = Array(numRows) { BooleanArray(numCols) }
+
 
     private var startColumn = 0 // Başlangıç sütunu
 
@@ -25,10 +26,11 @@ class GraphView @JvmOverloads constructor(
         // Örnek veri oluştur
         for (i in 0 until numRows) {
             for (j in 0 until numCols) {
-                data[i][j] = (0..7).random()
+                data[i][j] = false
             }
         }
     }
+
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val width = numCols * cellSize + (numCols - 1) * gapSize.dpToPx()
@@ -62,14 +64,23 @@ class GraphView @JvmOverloads constructor(
         }
     }
 
-    private fun getColorForValue(value: Int): Int {
-        return when (value) {
-            in 0..3 -> Color.parseColor("#4cdd7a") // 0 ile 7 arasında olan değerler için yeşil renk
-            in 4..7 -> Color.parseColor("#27674a") // 0 ile 7 arasında olan değerler için yeşil renk
-
-            else -> Color.parseColor("#27674a") // Diğer durumlar için yeşil renk
+    private fun getColorForValue(value: Boolean): Int {
+        return if (value) {
+            Color.parseColor("#4cdd7a") // true ise açık yeşil
+        } else {
+            Color.parseColor("#27674a") // false ise koyu yeşil
         }
     }
+    fun getNumCols(): Int {
+        return numCols
+    }
+    fun getNumRows(): Int {
+        return numRows
+    }
+    fun getData(): Array<BooleanArray> {
+        return data
+    }
+
 
     // dp değerini px'e dönüştürmek için yardımcı bir fonksiyon
     private fun Int.dpToPx(): Int {
