@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mertyigit0.habittrackereasy.databinding.HabitRowBinding
+import java.util.Calendar
 
 class HabitAdapter(private val habitList: ArrayList<Habit>) : RecyclerView.Adapter<HabitAdapter.MyViewHolder>() {
 
@@ -20,22 +21,47 @@ class HabitAdapter(private val habitList: ArrayList<Habit>) : RecyclerView.Adapt
                 incrementButtonClicked(graphView)
             }
         }
-
+       // val startMillis = graphView.getStartDateMillis()
         private fun incrementButtonClicked(graphView: GraphView) {
             val numRows = graphView.getNumRows()
+            val numCols = graphView.getNumCols()
             val data = graphView.getData()
 
-            // Her çağrıldığında tüm hücrelerin değerini true yap
-            for (i in 0 until numRows) {
-                for (j in 0 until graphView.getNumCols()) {
-                    data[i][j] = true
-                }
+
+
+            // Güncel tarihi al
+            val currentDate = Calendar.getInstance()
+            val startDate = graphView.getStartDate()
+           // Güncel tarihi al
+
+           println("Güncel Tarih: ${currentDate.time}")
+
+            // Başlangıç tarihinden bugüne kadar geçen gün sayısını hesapla
+            val daysDiffInMillis = currentDate.timeInMillis -graphView.getStartDateMillis()
+            val daysDiff = (daysDiffInMillis / (1000 * 60 * 60 * 24)).toInt()
+
+            // Hücrenin indekslerini hesapla
+            val col = daysDiff / numRows
+            val row = daysDiff % numRows
+
+            // Hücrenin değerini true yap
+            if (col < numCols && row < numRows) {
+                data[row][col] = true
             }
-            graphView.invalidate() // Grafiği güncelle
+
+            // Grafiği güncelle
+            graphView.invalidate()
         }
+
+
+
+
+
+
+
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = HabitRowBinding.inflate(inflater, parent, false)
         return MyViewHolder(binding, this)
