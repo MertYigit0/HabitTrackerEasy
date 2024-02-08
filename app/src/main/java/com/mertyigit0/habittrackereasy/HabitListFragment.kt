@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mertyigit0.habittrackereasy.databinding.FragmentHabitListBinding
@@ -22,9 +23,22 @@ class HabitListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        habitList = ArrayList() // habitList'i başlat
-        habitAdapter = HabitAdapter(habitList) // HabitAdapter'ı başlat
+        habitList = ArrayList()
+        habitAdapter = HabitAdapter(habitList)
+
+        loadHabitsFromDatabase()
     }
+
+    private fun loadHabitsFromDatabase() {
+        val databaseHelper = DatabaseHelper(requireContext())
+        val habitsWithData = databaseHelper.getAllHabitsWithData()
+
+        habitList.clear()
+        habitList.addAll(habitsWithData)
+
+        habitAdapter.notifyDataSetChanged()
+    }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -44,10 +58,11 @@ class HabitListFragment : Fragment() {
         binding.addButton.setOnClickListener {
             fabClicked()
         }
+
     }
 
     private fun fabClicked() {
-        val activityContext = requireActivity() // Aktivitenin Context'ini al
+        val activityContext = requireActivity()
         val builder = AlertDialog.Builder(activityContext)
         builder.setTitle("Add New Habit")
 
@@ -59,19 +74,27 @@ class HabitListFragment : Fragment() {
         inputLayout.addView(nameEditText)
 
         val descriptionEditText = EditText(activityContext)
-        descriptionEditText.hint = "Count"
+        descriptionEditText.hint = "Description"
         inputLayout.addView(descriptionEditText)
 
         builder.setView(inputLayout)
 
         builder.setPositiveButton("Add") { dialog, _ ->
             val name = nameEditText.text.toString()
-            val count = descriptionEditText.text.toString()
+            val description = descriptionEditText.text.toString()
 
             if (name.isNotEmpty()) {
-                val newHabit = Habit(name, description = count)
-                habitList.add(newHabit)
-                habitAdapter.notifyDataSetChanged() // RecyclerView'i güncelle
+                val newHabit = Habit(name = name, description = description)
+                val databaseHelper = DatabaseHelper(activityContext)
+                val habitId = databaseHelper.addHabit(newHabit) // Veritabanına alışkanlık ekle
+
+                if (habitId != -1L) {
+                    newHabit.id = habitId // Alışkanlığın ID'sini ayarla
+                    habitList.add(newHabit) // Yeni alışkanlığı listeye ekle
+                    habitAdapter.notifyItemInserted(habitList.size - 1) // RecyclerView'i güncelle
+                } else {
+                    Toast.makeText(activityContext, "Failed to add habit to database", Toast.LENGTH_SHORT).show()
+                }
             }
 
             dialog.dismiss()
@@ -84,10 +107,13 @@ class HabitListFragment : Fragment() {
         builder.create().show()
     }
 
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+
 }
 
 

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <string-array name="colors">
+        <item>Green (#4cdd7a)</item>
+        <item>Red (#ff6347)</item>
+        <item>Blue (#4169e1)</item>
+        <!-- Dilediğiniz kadar renk ekleyebilirsiniz -->
+    </string-array>
 </resources>

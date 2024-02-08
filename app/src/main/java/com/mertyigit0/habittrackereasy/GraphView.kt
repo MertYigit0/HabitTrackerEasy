@@ -18,7 +18,7 @@ class GraphView @JvmOverloads constructor(
 
     private val cellSize = 50
     private val gapSize = 2 // 1 dp boşluk
-    private val numCols = 52
+    private val numCols = 53
     private val numRows = 7
     private val data = Array(numRows) { BooleanArray(numCols) }
 
@@ -68,6 +68,7 @@ class GraphView @JvmOverloads constructor(
                 val radius = 8f // Köşe yarıçapı
 
                 paint.color = getColorForValue(data[j][i])
+
                 canvas.drawRoundRect(left, top, right, bottom, radius, radius, paint)
 
                 // Hücrenin içine günü yaz
@@ -82,6 +83,7 @@ class GraphView @JvmOverloads constructor(
                 val textX = left + cellWidth / 2
                 val textY = top + cellHeight / 2 - (textPaint.descent() + textPaint.ascent()) / 2
                 canvas.drawText(dateString, textX, textY, textPaint)
+
             }
         }
     }
@@ -89,6 +91,7 @@ class GraphView @JvmOverloads constructor(
     private fun getColorForValue(value: Boolean): Int {
         return if (value) {
             Color.parseColor("#4cdd7a") // true ise açık yeşil
+
         } else {
             Color.parseColor("#27674a") // false ise koyu yeşil
 
