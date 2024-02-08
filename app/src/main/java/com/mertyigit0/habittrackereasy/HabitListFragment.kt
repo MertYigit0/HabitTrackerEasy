@@ -84,7 +84,7 @@ class HabitListFragment : Fragment() {
             val description = descriptionEditText.text.toString()
 
             if (name.isNotEmpty()) {
-                val newHabit = Habit(name = name, description = description)
+                val newHabit = Habit(id = -1L, name = name, description = description)
                 val databaseHelper = DatabaseHelper(activityContext)
                 val habitId = databaseHelper.addHabit(newHabit) // Veritabanına alışkanlık ekle
 

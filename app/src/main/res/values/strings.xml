@@ -2,4 +2,35 @@
     <string name="app_name">HabitTrackerEasy</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+
+    <string-array name="colorss">
+
+        <item>Red 🔴</item>
+        <item>Blue 🔵</item>
+        <item>Green 🟢</item>
+        <item>Brown 🟤️</item>
+        <item>Orange 🟠️</item>
+        <item>Purple 🟣</item>
+
+    </string-array>
+
+
+    <string-array name="icons">
+
+        <item>📖</item>
+        <item>🚴</item>
+        <item>🚶</item>
+        <item>⏰️</item>
+        <item>💰️</item>
+        <item>💪</item>
+        <item>☕️</item>
+        <item>🥕</item>
+
+
+
+    </string-array>
+
 </resources>
+

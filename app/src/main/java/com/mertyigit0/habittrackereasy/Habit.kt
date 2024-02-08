@@ -1,7 +1,7 @@
 package com.mertyigit0.habittrackereasy
 
 data class Habit(
-    var id: Long = -1,
+    var id: Long ,
     val name: String,
     val description: String,
     val habitDataList: List<HabitData> = listOf()

@@ -3,11 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/habitListFragment">
+    app:startDestination="@id/addHabitFragment">
 
     <fragment
         android:id="@+id/habitListFragment"
         android:name="com.mertyigit0.habittrackereasy.HabitListFragment"
         android:label="fragment_habit_list"
         tools:layout="@layout/fragment_habit_list" />
+    <fragment
+        android:id="@+id/addHabitFragment"
+        android:name="com.mertyigit0.habittrackereasy.AddHabitFragment"
+        android:label="fragment_add_habit"
+        tools:layout="@layout/fragment_add_habit" />
 </navigation>
